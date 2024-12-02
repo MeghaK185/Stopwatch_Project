@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StopWatch</title>
+    <style>
+        .main{
+            width:400px;
+            height:200px;
+            border: 2px solid black;
+            background-color: black;
+            color:white;
+            border-radius: 5%;
+
+            
+        }
+        .display{
+            width:375px;
+            height: 80px;
+            border: 2px solid black;
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            
+        }
+        .button{
+            margin-left:70px;
+            margin-top: 4%;
+        }
+
+        #start{
+            height:60px;
+            width: 70px;
+            margin-right: 20px;
+            background-color:rgb(3, 131, 3);
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 5px 5px rgb(31, 29, 29);
+        }
+        #stopbtn{
+            height:60px;
+            width: 70px;
+            margin-right: 20px;
+            background-color: rgb(154, 3, 3);
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 5px 5px rgb(31, 29, 29); 
+        }
+        #reset{
+            height:60px;
+            width: 70px;
+            background-color: rgb(4, 50, 142);
+            border-radius: 10px;
+            font-weight: 700;
+            box-shadow: 5px 5px rgb(31, 29, 29);
+        }
+        #start:hover{
+            background-color: rgb(185, 190, 195);
+
+        }
+        #stopbtn:hover{
+            background-color: rgb(185, 190, 195);
+
+        }
+        #reset:hover{
+            background-color: rgb(185, 190, 195);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="display" id="display">00.00.00</div>
+        <div class="button">
+            <button id="start">START</button>
+            <button id="stopbtn">STOP</button>
+            <button id="reset">RESET</button>
+        </div>
+    </div>
+    <script>
+
+        let timer=0;
+        let isRunning=false;
+        let elapsedTime=0;
+
+        const display=document.getElementById('display');
+        const start=document.getElementById('start');
+        const stopbtn=document.getElementById('stopbtn');
+        const reset=document.getElementById('reset');
+
+        function updateDisplay(){
+            const hours=Math.floor((elapsedTime/3600)%60);
+            const minutes=Math.floor((elapsedTime/60)%60);
+            const seconds=Math.floor(elapsedTime%60);
+     
+    
+            display.textContent=
+            String(hours).padStart(2,'0')+':'+
+            String(minutes).padStart(2,'0')+':'+
+            String(seconds).padStart(2,'0');
+        }
+        function startTimer(){
+            if (!isRunning){
+                isRunning=true;
+                start.disabled=true;
+                stopbtn.disabled=false;
+                reset.disabled=false;
+
+                timer=setInterval(() =>{
+                    elapsedTime++;
+                    updateDisplay();
+                },1000);
+            }
+        }
+        function stopTimer(){
+            if (!isRunning){
+                isRunning=true;
+                start.disabled=false;
+                stopbtn.disabled=true;
+                
+                clearInterval(timer);
+
+        }
+    }
+        function resetTimer(){
+            stopTimer();
+            elapsedTime=0;
+            updateDisplay();
+            reset.disabled=true;   
+        }
+        start.addEventListners('click',startTimer);
+        stopbtn.addEventListners('click',stopTimer);
+        reset.addEventListners('click',resetTimer);
+
+    </script>
+</body>
+</html>
